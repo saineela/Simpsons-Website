@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<head>
+  <title>The Simpsons Scoop</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Scribble&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="top-menu">
+    <a href="about.html" class="menu-button">About</a>
+    <a href="404.html" class="menu-button">404</a>
+  </nav>
+
+  <header>
+    <h1 class="logo">The Simpsons!</h1>
+    <p>
+      <mark>
+        Welcome to Springfield’s Hero's
+        <span onclick="alert('Ummm, Homer is too fat?')" style="cursor:pointer; color:#e11d48; text-decoration:underline;">
+          (HOMER - Rejected)
+        </span>
+      </mark>
+    </p>
+  </header>
+
+  <section class="card-container">
+    <div class="card" style="--bg:url('https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png'); background-position:center 15%;" onclick="playSound('homer')">
+      <h2>Homer Simpson</h2>
+      <p><code>D’oh!</code> The lovable, lazy dad who works at the nuclear plant and loves donuts.</p>
+    </div>
+
+    <div class="card" style="--bg:url('https://upload.wikimedia.org/wikipedia/en/0/0b/Marge_Simpson.png'); background-position:center 40%;" onclick="playSound('marge')">
+      <h2>Marge Simpson</h2>
+      <p>With her iconic blue hair, Marge keeps the family grounded and always tries her best.</p>
+    </div>
+
+    <div class="card" style="--bg:url('https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png');" onclick="playSound('bart')">
+      <h2>Bart Simpson</h2>
+      <p>The mischievous skateboarder and prankster with a heart of gold. <sup>Eat my shorts!</sup></p>
+    </div>
+
+    <div class="card" style="--bg:url('https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png'); background-position:center 30%;" onclick="playSound('lisa')">
+      <h2>Lisa Simpson</h2>
+      <p>The brilliant saxophone-playing 8-year-old with a passion for justice and jazz.</p>
+    </div>
+
+    <div class="card" style="--bg:url('https://upload.wikimedia.org/wikipedia/en/9/9d/Maggie_Simpson.png'); background-position:center 40%;" onclick="playSound('maggie')">
+      <h2>Maggie Simpson</h2>
+      <p>The quiet baby of the family, always with her pacifier and a surprise up her sleeve.</p>
+    </div>
+
+    <div class="card" style="--bg:url('https://preview.redd.it/can-we-take-a-minute-to-acknowledge-the-goodest-boy-v0-8a9xzjko4teb1.jpg?width=640&crop=smart&auto=webp&s=e3efc1e2b365bdd328011245a888024a642e712a'); background-position:center 50%;" onclick="playSound('dog')">
+      <h2>Santa’s Little Helper</h2>
+      <p>The family’s loyal greyhound — goofy, sweet, and always hungry.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Listen to Springfield Voices</h2>
+    <audio controls src="audio.mp3"></audio>
+  </section>
+
+  <footer>
+    <p>
+      <a href="mailto:saiathulithn@gmail.com">Email Us</a> |
+      <a href="">GitHub Repo</a>
+    </p>
+  </footer>
+
+  <audio id="homer" src="homer.mp3"></audio>
+  <audio id="marge" src="marge.mp3"></audio>
+  <audio id="bart" src="bart.mp3"></audio>
+
+  <script>
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.3s ease-out';
+      });
+
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = (-(y - rect.height / 2) / rect.height) * 15;
+        const rotateY = ((x - rect.width / 2) / rect.width) * 15;
+        
+        card.style.transform = `
+          perspective(1000px) 
+          rotateX(${rotateX}deg) 
+          rotateY(${rotateY}deg)
+          scale3d(1.05, 1.05, 1.05)
+        `;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s ease';
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      });
+    });
+
+    function playSound(id) {
+      const audio = document.getElementById(id);
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    }
+  </script>
+</body>
+</html>
